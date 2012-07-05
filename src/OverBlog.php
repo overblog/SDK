@@ -397,27 +397,102 @@ abstract class OverBlogBase
 		// COMMENTS
 
 		'getBlogComments' => array (
+			'mparams'			=> array (
+				'blog_hostname',
+			),
+			'oparams'			=> array (
+				'state',
+				'limit',
+				'offset',
+			),
+			'method'			=> 'GET',
+			'url'				=> '/blog/%blog_hostname/comments',
+			'authentication'	=> self::OB_API_AUTHENTICATION_KEY,
 		),
 
 		'getPostComments' => array (
+			'mparams'			=> array (
+				'id_post',
+			),
+			'oparams'			=> array (
+				'limit',
+				'offset',
+			),
+			'method'			=> 'GET',
+			'url'				=> '/post/%id_post/comments',
+			'authentication'	=> self::OB_API_AUTHENTICATION_KEY,
 		),
 
 		'deleteComment' => array (
+			'mparams'			=> array (
+				'blog_hostname',
+				'id',
+			),
+			'oparams'			=> array (
+			),
+			'method'			=> 'POST',
+			'url'				=> '/blog/%blog_hostname/comment/delete',
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
 		'approveComment' => array (
+			'mparams'			=> array (
+				'blog_hostname',
+				'id',
+			),
+			'oparams'			=> array (
+			),
+			'method'			=> 'POST',
+			'url'				=> '/blog/%blog_hostname/comment/approve',
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
 		'unapproveComment' => array (
+			'mparams'			=> array (
+				'blog_hostname',
+				'id',
+			),
+			'oparams'			=> array (
+			),
+			'method'			=> 'POST',
+			'url'				=> '/blog/%blog_hostname/comment/unapprove',
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
 		'markCommentAsSpam' => array (
+			'mparams'			=> array (
+				'blog_hostname',
+				'id',
+			),
+			'oparams'			=> array (
+			),
+			'method'			=> 'POST',
+			'url'				=> '/blog/%blog_hostname/comment/markasspam',
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
 		'createComment' => array (
+			'mparams'			=> array (
+				'id_post',
+				'text',
+			),
+			'oparams'			=> array (
+			),
+			'method'			=> 'POST',
+			'url'				=> '/post/%id_post/comment/create',
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
 		'replyToComment' => array (
+			'mparams'			=> array (
+				'id_comment',
+				'text',
+			),
+			'oparams'			=> array (
+			),
+			'method'			=> 'POST',
+			'url'				=> '/comment/%id_comment/reply/create',
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
 		// STATS - not implemented
@@ -429,6 +504,18 @@ abstract class OverBlogBase
 		// LIVESTREAM
 
 		'createLiveStreamPost' => array (
+			'mparams'			=> array (
+				'blog_hostname',
+			),
+			'oparams'			=> array (
+				'title',
+				'author',
+				'tags',
+				'social',
+			),
+			'method'			=> 'POST',
+			'url'				=> '/blog/%blog_hostname/livestream/create',
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
 		// SEARCH - not implemented

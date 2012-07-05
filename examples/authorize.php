@@ -21,8 +21,8 @@ session_start();
 
 $ob = new OverBlog (
 	array (
-		'consumerKey'		=> '-------',
-		'consumerSecret'	=> '-------',
+		'consumerKey'		=> 'yourConsumerKey',
+		'consumerSecret'	=> 'yourConsumerSecret',
 	)
 );
 

@@ -20,10 +20,10 @@ include_once('../src/OverBlog.php');
 
 $ob = new OverBlog (
 	array (
-		'consumerKey'		=> '------',
-		'consumerSecret'	=> '------',
-		'accessToken'		=> '------',
-		'accessSecret'		=> '------',
+		'consumerKey'		=> 'yourConsumerKey',
+		'consumerSecret'	=> 'yourConsumerSecret',
+		'accessToken'		=> 'yourToken',
+		'accessSecret'		=> 'yourTokenSecret',
 	)
 );
 
@@ -43,12 +43,20 @@ $blogHostName = 'www.example.com';
 
 <?php
 
-echo '<h2>User information</h2><pre>';
+//--------------------------------------------------------------------------------
+// USER INFO
+//--------------------------------------------------------------------------------
+echo '<h2>User information</h2>'
+	.'<pre>';
 print_r($ob->getUserInfo());
 echo '</pre>';
 
 
-echo '<h2>Blog information before update</h2><pre>';
+//--------------------------------------------------------------------------------
+// BLOGS INFO
+//--------------------------------------------------------------------------------
+echo '<h2>Blog information before update</h2>'
+	.'<pre>';
 print_r(
 	$ob->getBlogInfo (
 		array (
@@ -68,7 +76,8 @@ $ob->updateBlogInfo (
 );
 
 
-echo '<h2>Blog information after update</h2><pre>';
+echo '<h2>Blog information after update</h2>'
+	.'<pre>';
 print_r(
 	$ob->getBlogInfo (
 		array (
@@ -80,7 +89,8 @@ echo '</pre>';
 */
 
 
-echo '<h2>The social networks you intent to push to</h2><pre>';
+echo '<h2>The social networks you intent to push to</h2>'
+	.'<pre>';
 print_r(
 	$ob->getSocialNetworksForPush (
 		array (
@@ -103,6 +113,9 @@ print_r(
 );
 */
 
+//--------------------------------------------------------------------------------
+// POSTS
+//--------------------------------------------------------------------------------
 echo '<h2>The posts published on your blog</h2>';
 $posts = $ob->getPublishedPosts (
 	array (
@@ -113,7 +126,38 @@ $posts = $ob->getPublishedPosts (
 echo '<ul>';
 foreach ($posts->response as $post)
 {
-	echo '<li> [#' . $post->id .'] '.$post->date.' | '.$post->title.'</li>';
+	$cover = null;
+	if(!is_null($post->cover))
+	{
+		$cover = '<img src="http://'.$post->cover->basepath.$post->cover->filepath.'" style="float:left; width: 150px; margin-right: 30px;" />';
+	}
+
+	$originsList = '';
+	foreach($post->origin as $k => $origin)
+	{
+		if($k > 0){$originsList .= ', ';}
+		$originsList .= $origin;
+	}
+
+	$tagsList = '';
+	foreach($post->tags as $k => $tag)
+	{
+		if($k > 0){$tagsList .= ', ';}
+		$tagsList .= $tag;
+	}
+
+	echo  '<li>'
+		. $cover
+		. '[<a href="http://admin.over-blog-kiwi.com/write/'.$post->id.'">#' . $post->id .'</a>] '
+		. '<strong><a href="'.$post->url.'">'.$post->title.'</a></strong>'
+		. '<ul>'
+		. '<li>Created on '.$post->date.'</li>'
+		. '<li>origin: '.$originsList.'</li>'
+		. '<li>tags: '.$tagsList.'</li>'
+		. '<li>'.$post->total_comment.' comments</li>'
+		. '</ul>'
+		. '<p>'.$post->snippet.'</p>'
+		. '</li>';
 }
 echo '</ul>';
 
@@ -149,7 +193,8 @@ print_r(
 		)
 	)
 );
-
+echo '<h2>Creating post</h2>'
+	.'<pre>';
 print_r(
 	$ob->createPost (
 		array (
@@ -158,6 +203,7 @@ print_r(
 			'status'		=> OverBlog::OB_API_STATUS_PUBLISHED,
 			'tags'			=> 'api,test,overblog',
 			'date'			=> '2012-07-04 21:30:00',
+			'social'		=> array('facebook', 'twitter'),
 			'author'		=> 'Me with the API SDK',
 			'sections'		=> array (
 				'sections'	 => array (
@@ -184,8 +230,87 @@ print_r(
 		)
 	)
 );
+echo '</pre>';
 */
 
+//--------------------------------------------------------------------------------
+// COMMENTS
+//--------------------------------------------------------------------------------
+/*
+echo '<h2>Making Livestream</h2>'
+	.'<pre>';
+print_r(
+	$ob->createLiveStreamPost (
+		array (
+			'blog_hostname'	=> $blogHostName,
+			'title'			=> 'Concert Livestream',
+			'author'		=> 'Joe la musique',
+			'tags'			=> 'livestream,video,music',
+			'desc'			=> 'Guys you\'are watching my concert',
+			'social'		=> array('facebook', 'twitter'),
+		)
+	)
+);
+echo '</pre>';
+*/
+
+
+//--------------------------------------------------------------------------------
+// COMMENTS
+//--------------------------------------------------------------------------------
+
+echo '<h2>Get blog comments</h2>'
+	.'<pre>';
+print_r(
+	$ob->getBlogComments(
+		array (
+			'blog_hostname'		=> $blogHostName,
+			'state'				=> OverBlog::OB_API_STATUS_PUBLISHED,
+			'limit'				=> 10,
+			'offset'			=> 0,
+		)
+	)
+);
+echo '</pre>';
+
+echo '<h2>Create Comment</h2>'
+	.'<pre>';
+print_r(
+	$ob->createComment(
+		array (
+			'id_post'			=> 130,
+			'text'				=> 'This is a comment',
+		)
+	)
+);
+echo '</pre>';
+
+echo '<h2>Get post comments</h2>'
+	.'<pre>';
+print_r(
+	$ob->getPostComments(
+		array (
+			'id_post'			=> 130,
+			'limit'				=> 10,
+			'offset'			=> 0,
+		)
+	)
+);
+echo '</pre>';
+
+/*
+echo '<h2>Reply to a Comment</h2>'
+	.'<pre>';
+print_r(
+	$ob->replyToComment(
+		array (
+			'id_comment'		=> 130,
+			'text'				=> 'This is a comment reply',
+		)
+	)
+);
+echo '</pre>';
+*/
 
 ?>
 
