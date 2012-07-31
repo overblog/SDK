@@ -1,4 +1,4 @@
 OverblogSDK
 ===========
 
-Public API SDK
+Public API SDK for PHP
