@@ -511,6 +511,7 @@ abstract class OverBlogBase
 				'title',
 				'author',
 				'tags',
+				'desc',
 				'social',
 			),
 			'method'			=> 'POST',
