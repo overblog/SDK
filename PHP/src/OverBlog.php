@@ -61,14 +61,13 @@ abstract class OverBlogBase
 	protected static $_api = array (
 
 		// BLOG
-
 		'getBlogInfo' => array (
 			'mparams'			=> array (
 				'blog_hostname',
 			),
 			'method'			=> 'GET',
 			'url'				=> '/blog/%blog_hostname/info',
-			'authentication'	=> self::OB_API_AUTHENTICATION_KEY,
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
 		'updateBlogInfo' => array (
