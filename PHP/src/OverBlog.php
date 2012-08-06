@@ -19,7 +19,7 @@ abstract class OverBlogBase
 {
 	const OB_SDK_USER_AGENT					= 'OverBlog PHP SDK client 0.1';
 
-	const OB_API_SERVER						= 'http://developer.over-blog-staging.com/';
+	const OB_API_SERVER						= 'http://developer.over-blog-dev.com/';
 
 	const OB_API_ENDPOINT_REQUEST_TOKEN 	= '/oauth/request_token';
 	const OB_API_ENDPOINT_ACCESS_TOKEN 		= '/oauth/access_token';
@@ -495,7 +495,44 @@ abstract class OverBlogBase
 			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
-		// STATS - not implemented
+		// STATS
+		'getStats' => array (
+			'mparams'			=> array (
+				'blog_hostname',
+				'start',
+				'end',
+			),
+			'oparams'			=> array (
+			),
+			'method'			=> 'GET',
+			'url'				=> '/blog/%blog_hostname/stats/get',
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
+		),
+
+		'getMostPopularPagesStats' => array (
+			'mparams'			=> array (
+				'blog_hostname',
+				'month',
+			),
+			'oparams'			=> array (
+			),
+			'method'			=> 'GET',
+			'url'				=> '/blog/%blog_hostname/stats/most_popular_pages',
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
+		),
+
+		'getTotalStats' => array (
+			'mparams'			=> array (
+				'blog_hostname',
+				'start',
+				'end',
+			),
+			'oparams'			=> array (
+			),
+			'method'			=> 'GET',
+			'url'				=> '/blog/%blog_hostname/stats/total',
+			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
+		),
 
 
 		// REVENUES - not implemented
