@@ -20,10 +20,10 @@ include_once('../src/OverBlog.php');
 
 $ob = new OverBlog (
 	array (
-		'consumerKey'		=> 'yourConsumerKey',
-		'consumerSecret'	=> 'yourConsumerSecret',
-		'accessToken'		=> 'yourToken',
-		'accessSecret'		=> 'yourTokenSecret',
+		'consumerKey'           => 'yourConsumerKey',
+		'consumerSecret'        => 'yourConsumerSecret',
+		'accessToken'           => 'yourToken',
+		'accessSecret'          => 'yourTokenSecret',
 	)
 );
 
@@ -46,6 +46,8 @@ $blogHostName = 'www.example.com';
 //--------------------------------------------------------------------------------
 // USER INFO
 //--------------------------------------------------------------------------------
+/*
+*/
 echo '<h2>User information</h2>'
 	.'<pre>';
 print_r($ob->getUserInfo());
@@ -64,9 +66,9 @@ print_r(
 		)
 	)
 );
+/*
 echo '</pre>';
 
-/*
 $ob->updateBlogInfo (
 	array (
 		'blog_hostname'	=> $blogHostName,
@@ -86,7 +88,6 @@ print_r(
 	)
 );
 echo '</pre>';
-*/
 
 
 echo '<h2>The social networks you intent to push to</h2>'
@@ -99,6 +100,7 @@ print_r(
 	)
 );
 echo '</pre>';
+*/
 
 /*
 // Image upload to debug
@@ -116,6 +118,7 @@ print_r(
 //--------------------------------------------------------------------------------
 // POSTS
 //--------------------------------------------------------------------------------
+/*
 echo '<h2>The posts published on your blog</h2>';
 $posts = $ob->getPublishedPosts (
 	array (
@@ -160,6 +163,7 @@ foreach ($posts->response as $post)
 		. '</li>';
 }
 echo '</ul>';
+*/
 
 
 /*
@@ -234,7 +238,7 @@ echo '</pre>';
 */
 
 //--------------------------------------------------------------------------------
-// COMMENTS
+// LiveStream
 //--------------------------------------------------------------------------------
 /*
 echo '<h2>Making Livestream</h2>'
@@ -258,7 +262,7 @@ echo '</pre>';
 //--------------------------------------------------------------------------------
 // COMMENTS
 //--------------------------------------------------------------------------------
-
+/*
 echo '<h2>Get blog comments</h2>'
 	.'<pre>';
 print_r(
@@ -306,6 +310,51 @@ print_r(
 		array (
 			'id_comment'		=> 130,
 			'text'				=> 'This is a comment reply',
+		)
+	)
+);
+echo '</pre>';
+*/
+
+
+//--------------------------------------------------------------------------------
+// STATS
+//--------------------------------------------------------------------------------
+/*
+
+echo '<h2>Stats: Get Most Popular Pages Stats</h2>'
+	.'<pre>';
+print_r(
+	$ob->getMostPopularPagesStats(
+		array (
+			'blog_hostname'		=> $blogHostName,
+			'month'				=> '2012-07-01',
+		)
+	)
+);
+echo '</pre>';
+
+echo '<h2>Get Stats for a period</h2>'
+	.'<pre>';
+print_r(
+	$ob->getStats(
+		array (
+			'blog_hostname'		=> $blogHostName,
+			'start'				=> '2012-07-01',
+			'end'				=> '2012-07-30',
+		)
+	)
+);
+echo '</pre>';
+
+echo '<h2>Get Total Stats for a period</h2>'
+	.'<pre>';
+print_r(
+	$ob->getTotalStats(
+		array (
+			'blog_hostname'		=> $blogHostName,
+			'start'				=> '2012-07-01',
+			'end'				=> '2012-07-30',
 		)
 	)
 );
