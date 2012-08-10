@@ -9,6 +9,7 @@
  */
 
 include_once('../src/OverBlog.php');
+include_once('constants.php');
 
 // In this example we use a very simple store which is the session
 // but in your application you may want to store user access tokens
@@ -18,11 +19,12 @@ session_start();
 
 
 // Here, replace consumerKey and consumerSecret with your data
+// see constants.php
 
 $ob = new OverBlog (
 	array (
-		'consumerKey'		=> 'yourConsumerKey',
-		'consumerSecret'	=> 'yourConsumerSecret',
+		'consumerKey'		=> OB_API_MY_CONSUMER_KEY,
+		'consumerSecret'	=> OB_API_MY_CONSUMER_SECRET,
 	)
 );
 

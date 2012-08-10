@@ -11,24 +11,17 @@
 
 
 include_once('../src/OverBlog.php');
+include_once('constants.php');
 
-
-// Here, replace consumerKey and consumerSecret with your application data
-// and accessToken and accessSecret by the token of the user you want to
-// act on behalf of.
-// Try 'authorize.php' in examples directory to get a user access token
 
 $ob = new OverBlog (
 	array (
-		'consumerKey'           => 'yourConsumerKey',
-		'consumerSecret'        => 'yourConsumerSecret',
-		'accessToken'           => 'yourToken',
-		'accessSecret'          => 'yourTokenSecret',
+		'consumerKey'		=> OB_API_MY_CONSUMER_KEY,
+		'consumerSecret'	=> OB_API_MY_CONSUMER_SECRET,
+		'accessToken'		=> OB_API_MY_ACCESS_TOKEN,
+		'accessSecret'		=> OB_API_MY_ACCESS_SECRET,
 	)
 );
-
-
-$blogHostName = 'www.example.com';
 
 ?>
 
@@ -62,7 +55,7 @@ echo '<h2>Blog information before update</h2>'
 print_r(
 	$ob->getBlogInfo (
 		array (
-			'blog_hostname'	=> $blogHostName,
+			'blog_hostname'	=> OB_API_MY_BLOG_HOSTNAME,
 		)
 	)
 );
@@ -71,7 +64,7 @@ echo '</pre>';
 
 $ob->updateBlogInfo (
 	array (
-		'blog_hostname'	=> $blogHostName,
+		'blog_hostname'	=> OB_API_MY_BLOG_HOSTNAME,
 		'name'			=> 'name of blog randomly changed '.mt_rand(1111,9999),
 		'description'	=> 'description of the blog also randomly changed '.mt_rand(1111,9999),
 	)
@@ -83,7 +76,7 @@ echo '<h2>Blog information after update</h2>'
 print_r(
 	$ob->getBlogInfo (
 		array (
-			'blog_hostname'	=> $blogHostName,
+			'blog_hostname'	=> OB_API_MY_BLOG_HOSTNAME,
 		)
 	)
 );
@@ -95,7 +88,7 @@ echo '<h2>The social networks you intent to push to</h2>'
 print_r(
 	$ob->getSocialNetworksForPush (
 		array (
-			'blog_hostname'	=> $blogHostName,
+			'blog_hostname'	=> OB_API_MY_BLOG_HOSTNAME,
 		)
 	)
 );
@@ -108,7 +101,7 @@ echo '</pre>';
 print_r(
 	$ob->uploadImage (
 		array (
-			'blog_hostname'	=> $blogHostName,
+			'blog_hostname'	=> OB_API_MY_BLOG_HOSTNAME,
 			'file'			=> '/Users/lionel/Desktop/id/ball-chair-transparent.jpg',
 		)
 	)
@@ -122,7 +115,7 @@ print_r(
 echo '<h2>The posts published on your blog</h2>';
 $posts = $ob->getPublishedPosts (
 	array (
-		'blog_hostname'	=> $blogHostName,
+		'blog_hostname'	=> OB_API_MY_BLOG_HOSTNAME,
 	)
 );
 
@@ -170,7 +163,7 @@ echo '</ul>';
 print_r(
 	$ob->getPost (
 		array (
-			'blog_hostname'		=> $blogHostName,
+			'blog_hostname'		=> OB_API_MY_BLOG_HOSTNAME,
 			'id'				=> 652663,
 			'contentFormat'		=> OverBlog::OB_API_CONTENTFORMAT_RAWJSON,
 			'richTextFormat'	=> 0,
@@ -182,7 +175,7 @@ print_r(
 print_r(
 	$ob->editPost (
 		array (
-			'blog_hostname'	=> $blogHostName,
+			'blog_hostname'	=> OB_API_MY_BLOG_HOSTNAME,
 			'id'			=> 652523661,
 			'title'			=> 'Title modified by API',
 		)
@@ -192,7 +185,7 @@ print_r(
 print_r(
 	$ob->deletePost (
 		array (
-			'blog_hostname'	=> $blogHostName,
+			'blog_hostname'	=> OB_API_MY_BLOG_HOSTNAME,
 			'id'			=> 621369,
 		)
 	)
@@ -202,7 +195,7 @@ echo '<h2>Creating post</h2>'
 print_r(
 	$ob->createPost (
 		array (
-			'blog_hostname'	=> $blogHostName,
+			'blog_hostname'	=> OB_API_MY_BLOG_HOSTNAME,
 			'title'			=> 'Post created by API',
 			'status'		=> OverBlog::OB_API_STATUS_PUBLISHED,
 			'tags'			=> 'api,test,overblog',
@@ -246,7 +239,7 @@ echo '<h2>Making Livestream</h2>'
 print_r(
 	$ob->createLiveStreamPost (
 		array (
-			'blog_hostname'	=> $blogHostName,
+			'blog_hostname'	=> OB_API_MY_BLOG_HOSTNAME,
 			'title'			=> 'Concert Livestream',
 			'author'		=> 'Joe la musique',
 			'tags'			=> 'livestream,video,music',
@@ -268,7 +261,7 @@ echo '<h2>Get blog comments</h2>'
 print_r(
 	$ob->getBlogComments(
 		array (
-			'blog_hostname'		=> $blogHostName,
+			'blog_hostname'		=> OB_API_MY_BLOG_HOSTNAME,
 			'state'				=> OverBlog::OB_API_STATUS_PUBLISHED,
 			'limit'				=> 10,
 			'offset'			=> 0,
