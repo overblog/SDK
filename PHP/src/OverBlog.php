@@ -103,6 +103,15 @@ abstract class OverBlogBase
 			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
+        'uploadVideo' => array (
+            'mparams'			=> array (
+                'blog_hostname',
+                'file',
+            ),
+            'method'			=> 'PUT',
+            'url'				=> '/blog/%blog_hostname/video/upload',
+            'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
+        ),
 
 		// POSTS
 
@@ -931,11 +940,7 @@ abstract class OverBlogBase
 			$putData = '';
 			if (isset($params['file']))
 			{
-				$putData = base64_encode(
-					file_get_contents(
-						$params['file']
-					)
-				);
+				$putData = file_get_contents($params['file']);
 
 				unset($params['file']);
 			}
