@@ -940,11 +940,7 @@ abstract class OverBlogBase
 			$putData = '';
 			if (isset($params['file']))
 			{
-				$putData = base64_encode(
-					file_get_contents(
-						$params['file']
-					)
-				);
+				$putData = file_get_contents($params['file']);
 
 				unset($params['file']);
 			}
