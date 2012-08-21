@@ -103,6 +103,15 @@ abstract class OverBlogBase
 			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
+        'uploadVideo' => array (
+            'mparams'			=> array (
+                'blog_hostname',
+                'file',
+            ),
+            'method'			=> 'PUT',
+            'url'				=> '/blog/%blog_hostname/video/upload',
+            'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
+        ),
 
 		// POSTS
 
