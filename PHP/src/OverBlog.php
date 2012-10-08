@@ -1022,8 +1022,6 @@ abstract class OverBlogBase
 				curl_setopt($ch, CURLOPT_INFILE, $fp);
 				curl_setopt($ch, CURLOPT_INFILESIZE, strlen($putData));
 				curl_setopt($ch, CURLOPT_HTTPHEADER, array ('Content-type: application/octet-stream'));
-
-				fclose($fp);
 				break;
 
 			case 'DELETE' :
@@ -1032,7 +1030,12 @@ abstract class OverBlogBase
 		}
 
 		$curlOut = curl_exec($ch);
-
+		
+		if (isset($fp))
+		{
+			fclose($fp);
+		}
+        
 		if (!$curlOut)
 		{
 			return false;
