@@ -19,7 +19,7 @@ abstract class OverBlogBase
 {
 	const OB_SDK_USER_AGENT					= 'OverBlog PHP SDK client 0.1';
 
-	const OB_API_SERVER						= 'http://developer.over-blog-staging.com/';
+	const OB_API_SERVER						= 'http://developer.over-blog-kiwi.com/';
 
 	const OB_API_ENDPOINT_REQUEST_TOKEN 	= '/oauth/request_token';
 	const OB_API_ENDPOINT_ACCESS_TOKEN 		= '/oauth/access_token';
