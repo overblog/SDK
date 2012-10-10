@@ -41,6 +41,14 @@ abstract class OverBlogBase
 	const OB_API_RICHTEXTFORMAT_RAW			= 0;
 	const OB_API_RICHTEXTFORMAT_HTML		= 1;
 
+	const OB_API_IMAGE_ALIGN_LEFT			= 'left';
+	const OB_API_IMAGE_ALIGN_RIGHT			= 'right';
+	const OB_API_IMAGE_SIZE_DEFAULT			= 0;
+	const OB_API_IMAGE_SIZE_TINY			= 100;
+	const OB_API_IMAGE_SIZE_MEDIUM			= 300;
+	const OB_API_IMAGE_SIZE_LARGE			= 600;
+
+
 
 	/*
 	 * Definition of all API methods
@@ -1083,5 +1091,140 @@ abstract class OverBlogBase
 
 class OverBlog extends OverBlogBase
 {
+	/*
+	 * This method creates a blog post in state Published
+	 * made of one 'text' section with an optional image.
+	 *
+	 * @param $blog_hostname	the name of the blog to post to
+	 * @param $title			the title of the post
+	 * @param $body				the HTML body of the post
+	 * @param $options			an array of options (see below)
+	 *		image : path of the image on your local filesystem
+	 *		imageAlign : OB_API_IMAGE_ALIGN_LEFT or OB_API_IMAGE_ALIGN_RIGHT
+	 *		imageSize : OB_API_IMAGE_SIZE_DEFAULT or _TINY or _MEDIUM or _LARGE
+	 *		tags : list of comma separated tags
+	 *		social : list of comma separated social networks to broadcast to
+	 *		author : name of the author
+	 */
+	function createTextPost ($blog_hostname, $title, $body, $options=null)
+	{
+		if (!is_array($options))
+		{
+			$options = array();
+		}
+
+		// STEP 1 : upload the optional image
+
+		if (isset($options['image']))
+		{
+			if (!file_exists($options['image']))
+			{
+				throw new OverBlogException(
+					'OverBlog::createTextPost() : ' .
+					'image does not exist in local filesystem');
+			}
+
+			// default values for alignement and size
+			if (!isset($options['imageAlign']))
+			{
+				$options['imageAlign'] = self::OB_API_IMAGE_ALIGN_LEFT;
+			}
+
+			if (!isset($options['imageSize']))
+			{
+				$options['imageSize'] = self::OB_API_IMAGE_SIZE_DEFAULT;
+			}
+
+			$uploadStatus = $this->uploadImage (
+				array (
+					'blog_hostname'	=> $blog_hostname,
+					'file'			=> $options['image'],
+				)
+			);
+
+			if (!$uploadStatus ||
+				!isset($uploadStatus->meta) ||
+				!isset($uploadStatus->meta->status) ||
+				($uploadStatus->meta->status != '200'))
+			{
+				throw new OverBlogException(
+					'OverBlog::createTextPost() : ' .
+					'image upload failed');
+			}
+
+			$options['image'] = $uploadStatus->response;
+		}
+
+
+		// STEP 2 : create the post
+
+		// default tags & sanitize
+		if (!isset($options['tags']))
+		{
+			$options['tags'] = '';
+		}
+		$options['tags'] = strval($options['tags']);
+
+
+		// default social networks & sanitize
+		if (!isset($options['social']))
+		{
+			$options['social'] = array();
+		}
+		if (!is_array($options['social']))
+		{
+			$options['social'] = explode(',', strval($options['social']));
+		}
+
+		// default author
+		if (!isset($options['author']))
+		{
+			$options['author'] = '';
+		}
+
+		$section = array (
+			'class'		=> 'text',
+			'text'		=> $body,
+		);
+
+		if (isset($options['image']))
+		{
+			$section['image'] = $options['image'];
+			$section['align'] = $options['imageAlign'];
+			$section['size'] = $options['imageSize'];
+
+		}
+
+		$postStatus = $this->createPost (
+			array (
+				'blog_hostname'		=> $blog_hostname,
+				'title'				=> $title,
+				'status'			=> self::OB_API_STATUS_PUBLISHED,
+				'tags'				=> $options['tags'],
+				'date'				=> date('c'),
+				'social'			=> $options['social'],
+				'author'			=> $options['author'],
+				'richTextFormat'	=> self::OB_API_RICHTEXTFORMAT_HTML,
+				'cover'				=> (isset($options['image'])?$options['image']:'null'),
+				'sections'		=> array (
+					'sections'	 => array (
+						$section
+					)
+				)
+			)
+		);
+
+		if (!$postStatus ||
+			!isset($postStatus->meta) ||
+			!isset($postStatus->meta->status) ||
+			($postStatus->meta->status != '201'))
+		{
+			throw new OverBlogException(
+				'OverBlog::createTextPost() : ' .
+				'an error occured when creating the post');
+		}
+
+		return true;
+	}
 
 }
