@@ -387,7 +387,7 @@ abstract class OverBlogBase
 			'oparams'			=> array (
 				'nickname',
 				'bio',
-				'string',
+				'city',
 				'avatar',
 			),
 			'method'			=> 'POST',
