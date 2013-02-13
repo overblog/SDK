@@ -533,7 +533,7 @@ abstract class OverBlogBase
 			'oparams'			=> array (
 			),
 			'method'			=> 'GET',
-			'url'				=> '/blog/%blog_hostname/stats/most_popular_pages',
+			'url'				=> '/blog/%blog_hostname/stats/tops',
 			'authentication'	=> self::OB_API_AUTHENTICATION_OAUTH,
 		),
 
